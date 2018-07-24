@@ -27,6 +27,7 @@ class Song
   end
 
 
+
   def self.create_by_name(song_name)
     song = self.new_by_name(song_name)
     song.save
@@ -48,12 +49,18 @@ class Song
   #split the file up into the two things, first thing is song name, second is artist
 
   def self.new_from_filename(filename)
-
     song = self.new
-    @artist_name = "#{filename}".split(" - ")[0]
-    @name = self.new_by_name("#{filename}".split(" - ")[1].chomp(".mp3"))
-    @name
+    song.artist_name = ("#{filename}".split(" - ")[0])
+    song.name = "#{filename}".split(" - ")[1].chomp(".mp3")
+    song
 
+  end
+
+  def self.create_from_filename(filename)
+    song = self.new
+    song.artist_name = ("#{filename}".split(" - ")[0])
+    song.name = "#{filename}".split(" - ")[1].chomp(".mp3")
+    song.save
   end
 
   def self.destroy_all
