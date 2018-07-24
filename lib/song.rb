@@ -52,7 +52,6 @@ class Song
     song = self.new
     @artist_name = "#{filename}".split(" - ")[0]
     @name = self.new_by_name("#{filename}".split(" - ")[1].chomp(".mp3"))
-    @artist_name
     @name
 
   end
