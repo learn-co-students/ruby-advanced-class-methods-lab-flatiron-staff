@@ -14,7 +14,7 @@ class Song
 
   def self.create
     #initializes a song and saves it to @@all
-    song = self.new
+    song = Song.new
     song.save
     song
   end
@@ -26,9 +26,8 @@ class Song
   end
 
   def self.create_by_name(song_name)
-    song = self.new
+    song = self.create
     song.name = song_name
-    song.save
     song
   end
 
@@ -37,12 +36,11 @@ class Song
   end
 
   def self.find_or_create_by_name(song_name)
-    search_result = self.find_by_name(song_name)
-    search_result ? search_result : self.create_by_name(song_name)
+    self.find_by_name(song_name) || self.create_by_name(song_name)
   end
 
   def self.alphabetical
-    self.all.sort_by {|song| song.name[0]}
+    self.all.sort_by {|song| song.name}
   end
 
   def self.new_from_filename(file_name)
@@ -50,7 +48,7 @@ class Song
     song_file = file_name.delete_suffix!('.mp3').split(" - ")
       artist_name = song_file[0]
       name = song_file[1]
-      song = Song.new
+      song = self.new
       song.name = name
       song.artist_name = artist_name
       song
@@ -61,15 +59,14 @@ class Song
     song_file = file_name.delete_suffix!('.mp3').split(" - ")
       artist_name = song_file[0]
       name = song_file[1]
-      song = Song.new
+      song = self.create
       song.name = name
       song.artist_name = artist_name
-      song.save
       song
   end
 
   def self.destroy_all
     self.all.clear
-  end 
+  end
 
 end
